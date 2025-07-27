@@ -3,18 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
+use App\Models\Course;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
-    public function index(){}
-
-    public function create(){
-        return view('questions.create');
+    public function index(){
+        $courses = Course::orderBy('id', 'desc')->get();
+        return view('questions.index', compact('courses'));
     }
 
+    public function create(Course $course){
+        return view('questions.create', compact('course'));
+    }
+ 
     public function store(Request $request){
         $validated = $request->validate([
             'name' => ['required'],
@@ -24,12 +28,14 @@ class QuestionController extends Controller
             'option_c' => ['nullable'],
             'option_d' => ['nullable'],
             'correct_answer' => ['required', 'in:A,B,C,D,a,b,c,d'],
+            'course_id' => ['required']
         ]);
 
             // Create only the question
         $question = Question::create([
             'name' => $validated['name'],
             'user_id' => Auth::id(),
+            'course_id' => $validated['course_id']
         ]);
 
             // Now insert answer options
@@ -55,6 +61,7 @@ class QuestionController extends Controller
             'answer_text' => $text,
             'is_correct' => strtoupper($validated['correct_answer']) === $label,
             'user_id' => Auth::id(),
+            'course_id' => $validated['course_id']
         ]);
     }
 

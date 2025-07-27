@@ -31,6 +31,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-course', [CourseController::class, 'store'])->name('add-course');
     Route::get('/manage-course', [CourseController::class, 'show'])->name('manage-course');
 
-    Route::get('/add-questions', [QuestionController::class, 'create'])->name('add-questions');
+    Route::get('/add-question', [QuestionController::class, 'index'])->name('add-question');
+
+    Route::get('/add-questions/{course}', [QuestionController::class, 'create'])->name('add-questions');
     Route::post('/add-questions', [QuestionController::class, 'store'])->name('add-questions');
 });

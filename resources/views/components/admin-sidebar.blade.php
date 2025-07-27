@@ -76,7 +76,8 @@
         <div class="collapse" id="forms">
           <ul class="nav nav-collapse">
             <li>
-              <a href="{{ route('add-questions') }}">
+              {{-- <a href="{{ route('add-questions') }}"> --}}
+              <a href="{{ route('add-question') }}">
                 <span class="sub-item">Add question</span>
               </a>
             </li>

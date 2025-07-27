@@ -30,7 +30,9 @@
                                     </td>
                                 </tr>
                             @empty
-                                
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">No courses available.</td>
+                                </tr>
                             @endforelse
                     </table>
                 </div>

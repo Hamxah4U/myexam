@@ -1,5 +1,4 @@
 <x-layout_admin>
-
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -15,6 +14,7 @@
                 <div class="card-body">
                     <form action="{{ route('add-questions') }}" method="post">
                         @csrf
+                        <input type="text" name="course_id" id="course_id" value="{{ $course->id }}">
 
                         <div class="row">
                             <div class="col-md-1"></div>
@@ -87,7 +87,7 @@
                                     <label for="name">Correct Answer</label>
                                     <input type="text" class="form-control" id="correct_answer" name="correct_answer"
                                         placeholder="Enter Crrect Answer" value="{{ old('correct_answer') }}" />
-                                    <x-form-error name='is_correct' />
+                                    <x-form-error name='correct_answer' />
                                 </div>
                             </div>
                             <div class="col-md-1"></div>
@@ -105,7 +105,6 @@
             </div>
         </div>
     </div>
-
 
     <script>
         function change_school() {

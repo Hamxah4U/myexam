@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Course::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

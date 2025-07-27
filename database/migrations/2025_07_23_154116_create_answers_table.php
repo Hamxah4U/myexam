@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Course;
 use App\Models\User;
 use App\Models\Question;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->text('answer_text');
             $table->boolean('is_correct')->default(false);
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Course::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
