@@ -67,6 +67,33 @@
         </div>
       </li>
 
+       <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#tables">
+          <i class="fas fa-book-open"></i>
+          <p>Exams</p>
+          <span class="caret"></span>
+        </a>
+        <div class="collapse" id="tables">
+          <ul class="nav nav-collapse">
+            <li>
+              <a href="{{ route('exam.create') }}">
+                <span class="sub-item">Add Exam</span>
+              </a>
+            </li>
+            {{-- <li>
+              <a href="tables/datatables.html">
+                <span class="sub-item">Set Exam Timer</span>
+              </a>
+            </li> --}}
+            <li>
+              <a href="{{ route('exam.show') }}">
+                <span class="sub-item">View Exams</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
       <li class="nav-item">
         <a data-bs-toggle="collapse" href="#forms">
           <i class="fas fa-question-circle"></i>
@@ -76,7 +103,6 @@
         <div class="collapse" id="forms">
           <ul class="nav nav-collapse">
             <li>
-              {{-- <a href="{{ route('add-questions') }}"> --}}
               <a href="{{ route('add-question') }}">
                 <span class="sub-item">Add question</span>
               </a>
@@ -84,28 +110,6 @@
             <li>
               <a href="forms/forms.html">
                 <span class="sub-item">Manage question</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a data-bs-toggle="collapse" href="#tables">
-          <i class="fas fa-book-open"></i>
-          <p>Exams</p>
-          <span class="caret"></span>
-        </a>
-        <div class="collapse" id="tables">
-          <ul class="nav nav-collapse">
-            <li>
-              <a href="tables/tables.html">
-                <span class="sub-item">Basic Table</span>
-              </a>
-            </li>
-            <li>
-              <a href="tables/datatables.html">
-                <span class="sub-item">Datatables</span>
               </a>
             </li>
           </ul>

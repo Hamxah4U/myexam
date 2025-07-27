@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <form action="{{ route('add-questions') }}" method="post">
                         @csrf
-                        <input type="text" name="course_id" id="course_id" value="{{ $course->id }}">
+                        <input type="hidden" name="course_id" id="course_id" value="{{ $course->id }}">
 
                         <div class="row">
                             <div class="col-md-1"></div>

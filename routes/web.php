@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\SchoolController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExamController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\QuestionController;
 
 Route::controller(SessionController::class)->group(function(){
     Route::get('/', [SessionController::class, 'create'])->name('login');  
@@ -35,4 +36,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/add-questions/{course}', [QuestionController::class, 'create'])->name('add-questions');
     Route::post('/add-questions', [QuestionController::class, 'store'])->name('add-questions');
+
+    Route::get('/add-exam', [ExamController::class, 'create'])->name('exam.create');
+    Route::post('/add-exam', [ExamController::class, 'store'])->name('exam.create');
+    Route::get('/view-exam', [ExamController::class, 'show'])->name('exam.show');
 });
