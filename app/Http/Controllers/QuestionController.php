@@ -67,4 +67,9 @@ class QuestionController extends Controller
 
         return redirect()->back()->with('success', 'Question and answers saved successfully!');
     }
+
+    public function show(){
+        $questions = Question::with(['answers'])->get();
+        return view('questions.show', compact('questions'));
+    }
 }

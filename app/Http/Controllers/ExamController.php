@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
 {
-    public function index(){}
+    public function index(){
+        
+    }
 
     public function create(){
         $courses = Course::all();

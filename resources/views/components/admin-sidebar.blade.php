@@ -4,7 +4,7 @@
       <li class="nav-item active">
         <a
           data-bs-toggle="collapse"
-          href="#dashboard"
+          href="/admin-dashboard"
           class="collapsed"
           aria-expanded="false"
         >
@@ -108,8 +108,8 @@
               </a>
             </li>
             <li>
-              <a href="forms/forms.html">
-                <span class="sub-item">Manage question</span>
+              <a href="{{ route('view.question') }}">
+                <span class="sub-item">View question</span>
               </a>
             </li>
           </ul>

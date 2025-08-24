@@ -8,6 +8,7 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\stdSessionController;
 
 Route::controller(SessionController::class)->group(function(){
     Route::get('/', [SessionController::class, 'create'])->name('login');  
@@ -36,8 +37,19 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/add-questions/{course}', [QuestionController::class, 'create'])->name('add-questions');
     Route::post('/add-questions', [QuestionController::class, 'store'])->name('add-questions');
+    Route::get('/view-questions', [QuestionController::class, 'show'])->name('view.question');
 
     Route::get('/add-exam', [ExamController::class, 'create'])->name('exam.create');
     Route::post('/add-exam', [ExamController::class, 'store'])->name('exam.create');
     Route::get('/view-exam', [ExamController::class, 'show'])->name('exam.show');
+
+});
+
+// student 
+
+Route::get('/students-login', [stdSessionController::class, 'show']);//->name('view-students');   
+Route::post('/student-login', [stdSessionController::class, 'store'])->name('studentlogin');  
+
+Route::middleware(['web', 'auth:student'])->group(function () {
+    Route::get('/student-dashboard', [stdSessionController::class, 'index'])->name('student.dashboard');    
 });
