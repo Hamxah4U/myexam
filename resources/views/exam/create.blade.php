@@ -56,7 +56,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Start Time</label>
-                                    <input type="datetime-local" name="start_date" id="start_date" value="{{ old('start_date') }}" class="form-control">
+                                    <input type="time" name="start_date" id="start_date" value="{{ old('start_date') }}" class="form-control">
 
                                     <x-form-error name='start_date' />
                                 </div>
@@ -65,7 +65,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">End Time</label>
-                                    <input type="datetime-local" class="form-control" id="end_date" name="end_date"
+                                    <input type="time" class="form-control" id="end_date" name="end_date"
                                         placeholder="Enter Exam name" value="{{ old('end_date') }}" />
                                     <x-form-error name='end_date' />
                                 </div>

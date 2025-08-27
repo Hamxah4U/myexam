@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignIdFor(Course::class)->constrained()->onDelete('cascade');
             $table->string('name');
             $table->integer('duration');
-            $table->dateTime('start_date')->nullable;
-            $table->dateTime('end_date')->nullable;
+            $table->timestamp('start_date')->nullable;
+            $table->timestamp('end_date')->nullable;
             $table->enum('status', ['pending', 'attempt', 'ongoing', 'completed']);
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->timestamps();

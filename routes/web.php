@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SessionController;
@@ -51,5 +52,15 @@ Route::get('/students-login', [stdSessionController::class, 'show']);//->name('v
 Route::post('/student-login', [stdSessionController::class, 'store'])->name('studentlogin');  
 
 Route::middleware(['web', 'auth:student'])->group(function () {
-    Route::get('/student-dashboard', [stdSessionController::class, 'index'])->name('student.dashboard');    
+    Route::get('/student-dashboard', [stdSessionController::class, 'index'])
+        ->name('student.dashboard');
+
+    Route::get('/student-exams/start/{examId}', [ExamController::class, 'startExam'])
+        ->name('student.exams.start');
+
+    Route::get('/student-exams/{examId}/{questionIndex?}', [ExamController::class, 'show'])
+        ->name('student.exams.show');
+
+    Route::post('/student/answers/store', [App\Http\Controllers\StudentAnswerController::class, 'store'])
+        ->name('student.answers.store');
 });

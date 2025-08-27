@@ -11,9 +11,9 @@ class stdSessionController extends Controller
 {
     public function index(){
         // $exam = Exam::with('questions.answers')->first();
-        $exam = Exam::all();
-
-        return view('examDashboard.index', compact('exam'));
+        // $exam = Exam::all();
+        $exams = Exam::with('course')->get();
+        return view('examDashboard.index', compact('exams'));
     }
 
     public function show(){
