@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/plugins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kaiadmin.min.css') }}">
+    <!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -31,7 +34,6 @@
                     <button class="btn btn-light"><h3><strong><span id="countdown"></span></strong></h3></button>
                 </h4>
             </div>
-
 
             <div class="card-body">
                 <p><strong>Course:</strong> {{ $exam->course->name }}</p>
@@ -97,7 +99,6 @@
             </div>
         </div>
 
-
         <script>
             let currentQuestion = 0;
             const totalQuestions = {{ count($exam->questions) }};
@@ -150,4 +151,27 @@
             let timer = setInterval(updateTimer, 1000);
         </script>
     </div>
+
+    @if (session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session("error") }}',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
+
+@if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session("success") }}',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
+
 </body>
