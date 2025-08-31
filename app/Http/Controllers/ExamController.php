@@ -40,47 +40,94 @@ class ExamController extends Controller
     }
 
     public function show($examId, $questionIndex = 0){
-        $exam = Exam::with(['course', 'user', 'questions.answers'])->findOrFail($examId);
+    $exam = Exam::with(['course', 'user', 'questions.answers'])->findOrFail($examId);
 
-        $studentExam = StudentExam::where('student_id', Auth::id())
-            ->where('exam_id', $examId)
-            ->firstOrFail();
+    $studentExam = StudentExam::where('student_id', Auth::id())
+        ->where('exam_id', $examId)
+        ->firstOrFail();
 
-        // If exam already completed, redirect
-        if ($studentExam->status === 'completed') {
-            return redirect()->route('student.dashboard')->with('error', 'Exam already completed.');
-        }
-
-        // Calculate remaining time
-        $remainingSeconds = now()->diffInSeconds($studentExam->end_time, false);
-
-        if ($remainingSeconds <= 0) {
-            // Mark as completed if expired
-            $studentExam->update(['status' => 'completed', 'end_time' => now()]);
-            return redirect()->route('student.dashboard')->with('error', 'Exam time is over.');
-        }
-
-        $totalQuestions = $exam->questions->count();
-        if ($questionIndex < 0 || $questionIndex >= $totalQuestions) {
-            return redirect()->route('student.exams.show', [$examId, 0]);
-        }
-
-        $currentQuestion = $exam->questions->get($questionIndex);
-
-        $savedAnswer = StudentAnswer::where('student_id', Auth::id())
-            ->where('exam_id', $exam->id)
-            ->where('question_id', $currentQuestion->id)
-            ->first();
-
-        return view('examDashboard.show', compact(
-            'exam',
-            'currentQuestion',
-            'questionIndex',
-            'totalQuestions',
-            'savedAnswer',
-            'remainingSeconds'
-        ));
+    // If exam already completed, redirect
+    if ($studentExam->status === 'completed') {
+        return redirect()->route('student.dashboard')->with('error', 'Exam already completed.');
     }
+
+    // Calculate remaining time
+    $remainingSeconds = now()->diffInSeconds($studentExam->end_time, false);
+
+    if ($remainingSeconds <= 0) {
+        // Mark as completed if expired
+        $studentExam->update(['status' => 'completed', 'end_time' => now()]);
+        return redirect()->route('student.dashboard')->with('error', 'Exam time is over.');
+    }
+
+    $totalQuestions = $exam->questions->count();
+    if ($questionIndex < 0 || $questionIndex >= $totalQuestions) {
+        return redirect()->route('student.exams.show', [$examId, 0]);
+    }
+
+    $currentQuestion = $exam->questions->get($questionIndex);   
+
+    // ✅ Shuffle answers before sending to view
+    $currentQuestion->answers = $currentQuestion->answers->shuffle();
+
+    $savedAnswer = StudentAnswer::where('student_id', Auth::id())
+        ->where('exam_id', $exam->id)
+        ->where('question_id', $currentQuestion->id)
+        ->first();
+
+    return view('examDashboard.show', compact(
+        'exam',
+        'currentQuestion',
+        'questionIndex',
+        'totalQuestions',
+        'savedAnswer',
+        'remainingSeconds'
+    ));
+}
+
+
+    // public function show($examId, $questionIndex = 0){
+    //     $exam = Exam::with(['course', 'user', 'questions.answers'])->findOrFail($examId);
+
+    //     $studentExam = StudentExam::where('student_id', Auth::id())
+    //         ->where('exam_id', $examId)
+    //         ->firstOrFail();
+
+    //     // If exam already completed, redirect
+    //     if ($studentExam->status === 'completed') {
+    //         return redirect()->route('student.dashboard')->with('error', 'Exam already completed.');
+    //     }
+
+    //     // Calculate remaining time
+    //     $remainingSeconds = now()->diffInSeconds($studentExam->end_time, false);
+
+    //     if ($remainingSeconds <= 0) {
+    //         // Mark as completed if expired
+    //         $studentExam->update(['status' => 'completed', 'end_time' => now()]);
+    //         return redirect()->route('student.dashboard')->with('error', 'Exam time is over.');
+    //     }
+
+    //     $totalQuestions = $exam->questions->count();
+    //     if ($questionIndex < 0 || $questionIndex >= $totalQuestions) {
+    //         return redirect()->route('student.exams.show', [$examId, 0]);
+    //     }
+
+    //     $currentQuestion = $exam->questions->get($questionIndex);        
+
+    //     $savedAnswer = StudentAnswer::where('student_id', Auth::id())
+    //         ->where('exam_id', $exam->id)
+    //         ->where('question_id', $currentQuestion->id)
+    //         ->first();
+
+    //     return view('examDashboard.show', compact(
+    //         'exam',
+    //         'currentQuestion',
+    //         'questionIndex',
+    //         'totalQuestions',
+    //         'savedAnswer',
+    //         'remainingSeconds'
+    //     ));
+    // }
 
 
     public function storeAnswer(Request $request, $examId, $questionIndex){
