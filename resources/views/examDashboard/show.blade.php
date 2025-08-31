@@ -31,7 +31,6 @@
                 <strong>Duration:</strong> {{ $exam->duration }} minutes 
                 (<span id="countdown"></span>)
             </p>
-
             <p><strong>Total Questions:</strong> {{ count($exam->questions) }}</p>
             <p><strong>Created by:</strong> {{ $exam->user->email }}</p>
 
@@ -116,28 +115,30 @@
                 showQuestion(currentQuestion);
             }
         });
+        
     </script>
 
-    {{-- <script>
-        let remaining = {{ $remainingSeconds }};
-        const countdownEl = document.getElementById("countdown");
+    <script>
+        let remaining = Math.floor({{ $remainingSeconds }});
 
-        function updateCountdown() {
-            let minutes = Math.floor(remaining / 60);
-            let seconds = remaining % 60;
-            countdownEl.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
+        function updateTimer() {
             if (remaining <= 0) {
                 clearInterval(timer);
-                alert("Time is up! Your exam will be submitted.");
                 document.getElementById("answerForm").submit();
+            } else {
+                let minutes = Math.floor(remaining / 60);
+                let seconds = remaining % 60;
+
+                let formattedTime =
+                    String(minutes).padStart(2, '0') + ":" +
+                    String(seconds).padStart(2, '0');
+
+                document.getElementById("countdown").innerText = formattedTime;
+                remaining--;
             }
-
-            remaining--;
         }
-
-        updateCountdown();
-        let timer = setInterval(updateCountdown, 1000);
-    </script> --}}
+        updateTimer();
+        let timer = setInterval(updateTimer, 1000);
+    </script>
     </div>
 </body>

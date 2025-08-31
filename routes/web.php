@@ -10,6 +10,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\stdSessionController;
+use App\Http\Controllers\StudentAnswerController;
 
 Route::controller(SessionController::class)->group(function(){
     Route::get('/', [SessionController::class, 'create'])->name('login');  
@@ -51,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/students-login', [stdSessionController::class, 'show']);//->name('view-students');   
 Route::post('/student-login', [stdSessionController::class, 'store'])->name('studentlogin');  
 
-Route::middleware(['web', 'auth:student'])->group(function () {
+Route::middleware(['auth:student'])->group(function () {
     Route::get('/student-dashboard', [stdSessionController::class, 'index'])
         ->name('student.dashboard');
 
@@ -61,6 +62,6 @@ Route::middleware(['web', 'auth:student'])->group(function () {
     Route::get('/student-exams/{examId}/{questionIndex?}', [ExamController::class, 'show'])
         ->name('student.exams.show');
 
-    Route::post('/student/answers/store', [App\Http\Controllers\StudentAnswerController::class, 'store'])
+    Route::post('/student/answers/store', [StudentAnswerController::class, 'store'])
         ->name('student.answers.store');
 });

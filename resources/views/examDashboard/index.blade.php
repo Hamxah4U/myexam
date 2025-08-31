@@ -37,9 +37,9 @@
 
             <div class="text-center">
                 @forelse ($exams as $exam)
-                    <a href="{{ route('student.exams.show', [$exam->id, 0]) }}" class="btn btn-lg btn-success px-5">
+                    <a href="{{ route('student.exams.start', $exam->id) }}" class="btn btn-lg btn-success px-5">
                         Start {{ $exam->name }}
-                    </a>                    
+                    </a>
                 @empty
                     <p>No exams available.</p>
                 @endforelse
